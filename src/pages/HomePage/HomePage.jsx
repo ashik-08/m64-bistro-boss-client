@@ -3,6 +3,7 @@ import Banner from "../../components/Home/Banner/Banner";
 import CategorySlider from "../../components/Home/CategorySlider/CategorySlider";
 import Featured from "../../components/Home/Featured/Featured";
 import PopularMenu from "../../components/Home/PopularMenu/PopularMenu";
+import Testimonial from "../../components/Home/Testimonial/Testimonial";
 
 const HomePage = () => {
   return (
@@ -12,7 +13,10 @@ const HomePage = () => {
         <CategorySlider />
         <PopularMenu />
       </Container>
-        <Featured />
+      <Featured />
+      <Container>
+        <Testimonial />
+      </Container>
     </section>
   );
 };
