@@ -4,6 +4,9 @@ module.exports = withMT({
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        featured: "url('/src/assets/home/featured.jpg')",
+      },
       colors: {
         title: "#D99904",
         para: '#737373',
