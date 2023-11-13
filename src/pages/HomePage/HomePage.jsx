@@ -1,6 +1,7 @@
 import Container from "../../components/Container/Container";
 import Banner from "../../components/Home/Banner/Banner";
 import CategorySlider from "../../components/Home/CategorySlider/CategorySlider";
+import PopularMenu from "../../components/Home/PopularMenu/PopularMenu";
 
 const HomePage = () => {
   return (
@@ -8,6 +9,7 @@ const HomePage = () => {
       <Banner />
       <Container>
         <CategorySlider />
+        <PopularMenu />
       </Container>
     </section>
   );

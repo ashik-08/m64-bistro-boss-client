@@ -6,6 +6,7 @@ module.exports = withMT({
     extend: {
       colors: {
         title: "#D99904",
+        para: '#737373',
       },
       fontFamily: {
         cinzel: ["Cinzel", "serif"],

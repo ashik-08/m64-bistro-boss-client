@@ -14,7 +14,7 @@ import SectionTitle from "../../SectionTitle/SectionTitle";
 
 const CategorySlider = () => {
   return (
-    <div>
+    <section>
       <SectionTitle
         subHeading={"---From 11:00am to 10:00pm---"}
         heading={"order online"}
@@ -26,7 +26,7 @@ const CategorySlider = () => {
           clickable: true,
         }}
         modules={[Pagination]}
-        className="mySwiper mt-10 lg:mt-16 font-cinzel text-center text-white text-xs md:text-2xl lg:text-3xl xl:text-4xl uppercase"
+        className="mySwiper font-cinzel text-center text-white text-xs md:text-2xl lg:text-3xl xl:text-4xl uppercase"
       >
         <SwiperSlide>
           <img src={slide1} alt="" />
@@ -59,7 +59,7 @@ const CategorySlider = () => {
           </h3>
         </SwiperSlide>
       </Swiper>
-    </div>
+    </section>
   );
 };
 
