@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <section className="text-white text-center">
+    <section className="text-white text-center mt-24 md:mt-28 lg:mt-32 xl:mt-36">
       <div className="grid md:grid-cols-2">
         <div className="bg-[#1F2937] py-12 md:py-24 grid md:grid-cols-4 lg:grid-cols-5">
           <div></div>

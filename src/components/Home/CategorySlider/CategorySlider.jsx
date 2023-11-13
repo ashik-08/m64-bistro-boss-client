@@ -16,40 +16,40 @@ const CategorySlider = () => {
     <div>
       <Swiper
         slidesPerView={4}
-        spaceBetween={40}
+        spaceBetween={10}
         pagination={{
           clickable: true,
         }}
         modules={[Pagination]}
-        className="mySwiper mt-12 md:mt-20"
+        className="mySwiper mt-12 md:mt-20 font-cinzel text-center text-white text-xs md:text-2xl lg:text-3xl xl:text-4xl uppercase"
       >
         <SwiperSlide>
           <img src={slide1} alt="" />
-          <h3 className="text-center text-white md:text-2xl lg:text-3xl xl:text-4xl font-semibold -mt-7 md:-mt-12 lg:-mt-14 xl:-mt-16 uppercase">
+          <h3 className="absolute translate-x-1/2 right-1/2 bottom-1 md:bottom-2 lg:bottom-3.5 xl:bottom-5">
             Salads
           </h3>
         </SwiperSlide>
         <SwiperSlide>
           <img src={slide2} alt="" />
-          <h3 className="text-center text-white md:text-2xl lg:text-3xl xl:text-4xl font-semibold -mt-7 md:-mt-12 lg:-mt-14 xl:-mt-16 uppercase">
+          <h3 className="absolute translate-x-1/2 right-1/2 bottom-1 md:bottom-2 lg:bottom-3.5 xl:bottom-5">
             Pizzas
           </h3>
         </SwiperSlide>
         <SwiperSlide>
           <img src={slide3} alt="" />
-          <h3 className="text-center text-white md:text-2xl lg:text-3xl xl:text-4xl font-semibold -mt-7 md:-mt-12 lg:-mt-14 xl:-mt-16 uppercase">
+          <h3 className="absolute translate-x-1/2 right-1/2 bottom-1 md:bottom-2 lg:bottom-3.5 xl:bottom-5">
             Soups
           </h3>
         </SwiperSlide>
         <SwiperSlide>
           <img src={slide4} alt="" />
-          <h3 className="text-center text-white md:text-2xl lg:text-3xl xl:text-4xl font-semibold -mt-7 md:-mt-12 lg:-mt-14 xl:-mt-16 uppercase">
+          <h3 className="absolute translate-x-1/2 right-1/2 bottom-1 md:bottom-2 lg:bottom-3.5 xl:bottom-5">
             Desserts
           </h3>
         </SwiperSlide>
         <SwiperSlide>
           <img src={slide5} alt="" />
-          <h3 className="text-center text-white md:text-2xl lg:text-3xl xl:text-4xl font-semibold -mt-7 md:-mt-12 lg:-mt-14 xl:-mt-16 uppercase">
+          <h3 className="absolute translate-x-1/2 right-1/2 bottom-1 md:bottom-2 lg:bottom-3.5 xl:bottom-5">
             Vegetables
           </h3>
         </SwiperSlide>

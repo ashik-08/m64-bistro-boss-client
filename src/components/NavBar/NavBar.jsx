@@ -127,7 +127,7 @@ const NavBar = () => {
                 />
                 <Link
                   to="/"
-                  className="text-white text-sm md:text-2xl xl:text-3xl font-metal font-semibold"
+                  className="text-white text-sm md:text-2xl xl:text-3xl font-cinzel font-semibold"
                 >
                   BISTRO BOSS
                 </Link>
