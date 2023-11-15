@@ -6,10 +6,11 @@ module.exports = withMT({
     extend: {
       backgroundImage: {
         featured: "url('/src/assets/home/featured.jpg')",
+        "section-cover": "url('/src/assets/menu/dessert-bg.jpeg')",
       },
       colors: {
         title: "#D99904",
-        para: '#737373',
+        para: "#737373",
       },
       fontFamily: {
         cinzel: ["Cinzel", "serif"],
