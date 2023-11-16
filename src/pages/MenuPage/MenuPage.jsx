@@ -35,7 +35,7 @@ const MenuPage = () => {
           subHeading={"---Don't miss---"}
           heading={"Today's offer"}
         />
-        <MenuCategory items={offeredItems} />
+        <MenuCategory items={offeredItems} title={"offer"} />
         <MenuCategory
           items={dessertItems}
           img={dessert}

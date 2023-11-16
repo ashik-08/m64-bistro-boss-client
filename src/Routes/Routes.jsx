@@ -18,7 +18,7 @@ export const routes = createBrowserRouter([
         element: <MenuPage />,
       },
       {
-        path: "/order/:title",
+        path: "/order/:category",
         element: <OrderPage />,
       },
     ],

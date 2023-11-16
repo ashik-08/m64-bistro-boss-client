@@ -7,16 +7,18 @@ import "react-tabs/style/react-tabs.css";
 import { useState } from "react";
 import useMenu from "../../components/hooks/useMenu";
 import OrderTab from "../../components/OrderTab/OrderTab";
-import "./OrderTab.css";
 import { useParams } from "react-router-dom";
+import "./OrderTab.css";
 
 const OrderPage = () => {
-  const categories = ["dessert", "pizza", "salad", "soup", "drinks"];
+  const categories = ["offer", "dessert", "pizza", "salad", "soup", "drinks"];
   const { category } = useParams();
-  const initialIndex = categories.indexOf(category)
+  const initialIndex = categories.indexOf(category);
   const [tabIndex, setTabIndex] = useState(initialIndex);
+
   // load data with custom hook
   const [menu] = useMenu();
+  const offeredItems = menu.filter((item) => item.category === "offered");
   const dessertItems = menu.filter((item) => item.category === "dessert");
   const pizzaItems = menu.filter((item) => item.category === "pizza");
   const saladItems = menu.filter((item) => item.category === "salad");
@@ -41,12 +43,14 @@ const OrderPage = () => {
             className="mt-24 md:mt-28 lg:mt-32 xl:mt-36"
           >
             <TabList className="mb-10 md:mb-14 lg:mb-16 xl:mb-20 uppercase flex flex-wrap justify-center gap-5 lg:text-lg xl:text-xl font-medium">
+              <Tab>offer</Tab>
               <Tab>dessert</Tab>
               <Tab>pizza</Tab>
               <Tab>salad</Tab>
               <Tab>soup</Tab>
               <Tab>drinks</Tab>
             </TabList>
+            <TabPanel>{<OrderTab items={offeredItems} />}</TabPanel>
             <TabPanel>{<OrderTab items={dessertItems} />}</TabPanel>
             <TabPanel>{<OrderTab items={pizzaItems} />}</TabPanel>
             <TabPanel>{<OrderTab items={saladItems} />}</TabPanel>
