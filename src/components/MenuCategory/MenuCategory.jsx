@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "../Container/Container";
 import MenuCard from "../MenuCard/MenuCard";
 import SectionCover from "../SectionCover/SectionCover";
@@ -13,10 +14,10 @@ const MenuCategory = ({ items, img, title, details }) => {
             <MenuCard key={item._id} item={item} />
           ))}
         </div>
-        <div className="text-center mt-10">
-          <button className="btn btn-outline lg:text-lg font-semibold border-0 border-b-2">
+        <div className="text-center mt-12">
+          <Link to={`/order/${title}`} className="btn btn-outline lg:text-lg font-semibold border-0 border-b-2">
             Order your favorite food
-          </button>
+          </Link>
         </div>
       </Container>
     </section>
