@@ -17,9 +17,11 @@ const FoodCard = ({ food }) => {
               ${price}
             </p>
           )}
-          <button className="btn btn-outline xl:text-lg text-title font-semibold border-0 border-b-2 mt-4">
-            Add to cart
-          </button>
+          <div className="pt-3">
+            <button className="btn btn-outline xl:text-lg text-title font-semibold bg-[#E8E8E8] border-0 border-b-2">
+              Add to cart
+            </button>
+          </div>
         </div>
       </div>
     </div>

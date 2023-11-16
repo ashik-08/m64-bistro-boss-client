@@ -7,6 +7,7 @@ module.exports = withMT({
       backgroundImage: {
         featured: "url('/src/assets/home/featured.jpg')",
         "section-cover": "url('/src/assets/menu/dessert-bg.jpeg')",
+        authentication: "url('/src/assets/authentication-bg.png')",
       },
       colors: {
         title: "#D99904",
