@@ -1,5 +1,10 @@
 .react-tabs__tab--selected {
   color: #bb8506;
   border: none;
+  outline: none;
   border-bottom: 2px solid #bb8506;
+}
+
+.react-tabs__tab {
+  cursor: pointer;
 }

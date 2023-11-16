@@ -3,12 +3,12 @@ import Cover from "../../components/Cover/Cover";
 import banner from "../../assets/order/banner-order.jpg";
 import Container from "../../components/Container/Container";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+// import "react-tabs/style/react-tabs.css";
+import "./OrderTab.css";
 import { useState } from "react";
 import useMenu from "../../components/hooks/useMenu";
 import OrderTab from "../../components/OrderTab/OrderTab";
 import { useParams } from "react-router-dom";
-import "./OrderTab.css";
 
 const OrderPage = () => {
   const categories = ["offer", "dessert", "pizza", "salad", "soup", "drinks"];
@@ -42,7 +42,7 @@ const OrderPage = () => {
             onSelect={(index) => setTabIndex(index)}
             className="mt-24 md:mt-28 lg:mt-32 xl:mt-36"
           >
-            <TabList className="mb-10 md:mb-14 lg:mb-16 xl:mb-20 uppercase flex flex-wrap justify-center gap-5 lg:text-lg xl:text-xl font-medium">
+            <TabList className="mb-10 md:mb-14 lg:mb-16 xl:mb-20 uppercase flex flex-wrap justify-center gap-10 lg:text-lg xl:text-xl font-medium">
               <Tab>offer</Tab>
               <Tab>dessert</Tab>
               <Tab>pizza</Tab>
