@@ -4,10 +4,22 @@ import { Helmet } from "react-helmet-async";
 import Container from "../../components/Container/Container";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
-import { useState } from "react";
+import { PiCaretDoubleRightBold } from "react-icons/pi";
+import { useEffect, useRef, useState } from "react";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
+  const captchaRef = useRef(null);
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,18 +29,26 @@ const Login = () => {
     console.log(email, password);
   };
 
+  const handleValidateCaptcha = () => {
+    const user_captcha_value = captchaRef.current.value;
+    // console.log(value);
+    if (validateCaptcha(user_captcha_value)) {
+      setDisabled(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
         <title>Bistro Boss | Login</title>
       </Helmet>
-      <section className="bg-authentication min-h-[100vh] flex justify-center items-center">
+      <section className="bg-authentication flex justify-center items-center py-16">
         <Container>
-          <div className="bg-authentication shadow-bg flex flex-col lg:flex-row justify-center items-center gap-16 md:gap-24">
-            <div className="flex-1">
+          <div className="bg-authentication shadow-bg flex flex-col lg:flex-row justify-center items-center gap-16 md:gap-24 lg:gap-0">
+            <div className="flex-1 w-full">
               <img src={login} alt="" />
             </div>
-            <div className="p-8 md:p-20">
+            <div className="p-8 md:px-28 md:py-16">
               <h1 className="text-center text-2xl md:text-3xl lg:text-4xl font-semibold mb-12">
                 Sign In
               </h1>
@@ -59,6 +79,25 @@ const Login = () => {
                     {showPass ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}
                   </span>
                 </span>
+                <div className="mt-6 mb-4">
+                  <LoadCanvasTemplate />
+                </div>
+                <span className="relative">
+                  <input
+                    className="text-para w-full px-6 py-4 rounded-lg outline outline-1 outline-para"
+                    type="text"
+                    name="captcha"
+                    placeholder="Enter above text"
+                    ref={captchaRef}
+                    required
+                  />
+                  <span
+                    onClick={handleValidateCaptcha}
+                    className="btn btn-ghost btn-xs absolute -top-0.5 right-2"
+                  >
+                    <PiCaretDoubleRightBold />
+                  </span>
+                </span>
                 <button
                   onClick={() =>
                     document.getElementById("my_modal_2").showModal()
@@ -67,7 +106,12 @@ const Login = () => {
                 >
                   Forgot password?
                 </button>
-                <button className="bg-title text-white text-xl font-semibold py-4 w-full rounded-lg my-8">
+                <button
+                  disabled={disabled}
+                  className={`bg-title text-white text-xl font-semibold py-4 w-full rounded-lg my-8 ${
+                    disabled && "bg-[#e6ae5bb2]"
+                  }`}
+                >
                   <input type="submit" value="Sign In" />
                 </button>
               </form>

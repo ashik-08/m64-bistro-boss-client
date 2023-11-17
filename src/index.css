@@ -15,3 +15,14 @@
 .shadow-bg {
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
 }
+
+#canv {
+  width: 100%;
+  border: 1px solid #737373;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+#reload_href {
+  color: #d99904 !important;
+}
