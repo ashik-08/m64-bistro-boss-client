@@ -7,11 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { updateProfile } from "firebase/auth";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const {
@@ -30,20 +29,23 @@ const Register = () => {
       .then(async (result) => {
         console.log(result.user);
         // update profile
-        updateProfile(result.user, {
-          displayName: data.name,
-          //   photoURL: photo,
-        })
+        updateUserProfile(data.name, data.photo)
           .then(() => {
             // Profile updated!
           })
           .catch(() => {
             // An error occurred
           });
+        // Logout and redirect to login page
+        logOut()
+          .then(() => {})
+          .catch(() => {
+            // An error occurred
+          });
 
         toast.success("Registered Successfully.", { id: toastId });
         reset();
-        navigate("/");
+        navigate("/login");
       })
       .catch((error) => {
         console.error(error);
@@ -61,7 +63,7 @@ const Register = () => {
       <Helmet>
         <title>Bistro Boss | Register</title>
       </Helmet>
-      <section className="bg-authentication min-h-[100vh] py-16">
+      <section className="bg-authentication min-h-[100vh] py-6">
         <Container>
           <div className="bg-authentication shadow-bg flex flex-col xl:flex-row justify-center items-center gap-10">
             <div className="xl:w-1/2">
@@ -80,6 +82,17 @@ const Register = () => {
                     {...register("name")}
                     name="name"
                     placeholder="Your Name"
+                    required
+                  />
+                </span>
+                <span className="space-y-4">
+                  <p className="text-lg font-semibold mt-8">Photo URL</p>
+                  <input
+                    className="text-para w-full px-6 py-4 rounded-lg outline outline-1 outline-para"
+                    type="url"
+                    {...register("photo")}
+                    name="photo"
+                    placeholder="Your Photo URL"
                     required
                   />
                 </span>

@@ -171,6 +171,7 @@ const NavBar = () => {
                         <a>{user?.email}</a>
                       </li>
                       <li>
+                      <a>{user?.displayName}</a>
                         {/* <Link to="/add-food-item">Add Food Item</Link> */}
                       </li>
                       <li>

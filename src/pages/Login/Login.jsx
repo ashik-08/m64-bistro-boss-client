@@ -21,6 +21,7 @@ const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -49,7 +50,8 @@ const Login = () => {
         console.log(result.user);
         toast.success("Logged In Successfully.", { id: toastId });
         form.reset();
-        navigate(location?.state ? location?.state : "/");
+        // navigate(location?.state ? location?.state : "/");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.error(error);

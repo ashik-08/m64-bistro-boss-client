@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import auth from "../firebase/firebase.config";
 // import axios from "axios";
@@ -31,7 +32,15 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  //   login with email & password
+  // update profile
+  const updateUserProfile = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
+
+  // login with email & password
   const signInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
@@ -70,20 +79,20 @@ const AuthProvider = ({ children }) => {
   // observe auth state change
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //   const loggedInUser = { email: currentUser?.email };
+      //   const loggedInUser = { email: currentUser?.email };
       setUser(currentUser);
       setLoading(false);
       // if user exists then issue a token
-    //   if (currentUser) {
-    //     // get access token with axios
-    //     axios
-    //       .post("https://m58-car-doctor-server.vercel.app/jwt", loggedInUser, {
-    //         withCredentials: true,
-    //       })
-    //       .then((res) => {
-    //         console.log(res.data);
-    //       });
-    //   }
+      //   if (currentUser) {
+      //     // get access token with axios
+      //     axios
+      //       .post("https://m58-car-doctor-server.vercel.app/jwt", loggedInUser, {
+      //         withCredentials: true,
+      //       })
+      //       .then((res) => {
+      //         console.log(res.data);
+      //       });
+      //   }
     });
     return () => {
       unSubscribe();
@@ -94,6 +103,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     createUser,
+    updateUserProfile,
     signInUser,
     signInWithGoogle,
     signInWithFacebook,
