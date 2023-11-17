@@ -69,10 +69,11 @@ const Login = () => {
   // google sign in
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then(async (result) => {
+      .then((result) => {
         console.log(result.user);
         toast.success("Logged In Successfully.");
-        navigate(location?.state ? location?.state : "/");
+        // navigate(location?.state ? location?.state : "/");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.error(error);

@@ -4,9 +4,12 @@ import logo from "../../assets/logo.png";
 import Container from "../Container/Container";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import { GrCart } from "react-icons/gr";
+import useCart from "../hooks/useCart";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCart();
 
   const handleLogout = () => {
     const toastId = toast.loading("Logging Out...");
@@ -68,6 +71,21 @@ const NavBar = () => {
           }
         >
           Our Menu
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/cart"
+          className={({ isActive }) =>
+            isActive
+              ? "text-title text-sm md:text-lg font-bold"
+              : "text-sm md:text-lg"
+          }
+        >
+          <GrCart className="lg:mt-1" />
+          <div className="badge badge-outline badge-xs lg:absolute lg:bottom-0 lg:right-0 text-title p-2">
+            {cart?.length}
+          </div>
         </NavLink>
       </li>
       <li>
@@ -171,7 +189,7 @@ const NavBar = () => {
                         <a>{user?.email}</a>
                       </li>
                       <li>
-                      <a>{user?.displayName}</a>
+                        <a>{user?.displayName}</a>
                         {/* <Link to="/add-food-item">Add Food Item</Link> */}
                       </li>
                       <li>
