@@ -1,25 +1,24 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import Container from "../Container/Container";
-// import { AuthContext } from "../../Provider/AuthProvider";
-// import toast from "react-hot-toast";
+import { AuthContext } from "../../Provider/AuthProvider";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
-  //   const { user, logOut } = useContext(AuthContext);
-  const { user } = useState(null);
+  const { user, logOut } = useContext(AuthContext);
 
-  //   const handleLogout = () => {
-  //     const toastId = toast.loading("Logging Out...");
-  //     logOut()
-  //       .then(() => {
-  //         toast.success("Logged Out Successfully.", { id: toastId });
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //         toast.error("Something went wrong!", { id: toastId });
-  //       });
-  //   };
+  const handleLogout = () => {
+    const toastId = toast.loading("Logging Out...");
+    logOut()
+      .then(() => {
+        toast.success("Logged Out Successfully.", { id: toastId });
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Something went wrong!", { id: toastId });
+      });
+  };
 
   const links = (
     <>
@@ -181,7 +180,7 @@ const NavBar = () => {
                         {/* <Link to="/ordered-food-items">My Ordered Food Items</Link> */}
                       </li>
                       <li>
-                        <Link>Logout</Link>
+                        <button onClick={handleLogout}>Logout</button>
                       </li>
                     </>
                   </ul>

@@ -1,33 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../assets/authentication.png";
 import { Helmet } from "react-helmet-async";
 import Container from "../../components/Container/Container";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { PiCaretDoubleRightBold } from "react-icons/pi";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
+import { AuthContext } from "../../Provider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  const { signInUser, signInWithGoogle } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    console.log(email, password);
-  };
 
   const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
@@ -37,16 +34,67 @@ const Login = () => {
     }
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // console.log(email, password);
+
+    const toastId = toast.loading("Logging In...");
+
+    // signIn user
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        toast.success("Logged In Successfully.", { id: toastId });
+        form.reset();
+        navigate(location?.state ? location?.state : "/");
+      })
+      .catch((error) => {
+        console.error(error);
+        // check for invalid credential
+        if (
+          error.message === "Firebase: Error (auth/invalid-login-credentials)."
+        ) {
+          toast.error("Invalid Email or Password", {
+            id: toastId,
+          });
+        }
+      });
+  };
+
+  // google sign in
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then(async (result) => {
+        console.log(result.user);
+        toast.success("Logged In Successfully.");
+        navigate(location?.state ? location?.state : "/");
+      })
+      .catch((error) => {
+        console.error(error);
+        if (
+          error.message ===
+          "Firebase: Error (auth/account-exists-with-different-credential)."
+        ) {
+          toast.error("Account exists with different credential.");
+        } else {
+          toast.error("Something went wrong!");
+        }
+      });
+  };
+
   return (
     <>
       <Helmet>
         <title>Bistro Boss | Login</title>
       </Helmet>
-      <section className="bg-authentication flex justify-center items-center py-16">
+      <section className="bg-authentication py-16">
         <Container>
-          <div className="bg-authentication shadow-bg flex flex-col lg:flex-row justify-center items-center gap-16 md:gap-24 lg:gap-0">
+          <div className="bg-authentication shadow-bg flex flex-col xl:flex-row justify-center items-center gap-10">
             <div className="flex-1 w-full">
-              <img src={login} alt="" />
+              <img className="mx-auto" src={login} alt="" />
             </div>
             <div className="p-8 md:px-28 md:py-16">
               <h1 className="text-center text-2xl md:text-3xl lg:text-4xl font-semibold mb-12">
@@ -109,7 +157,7 @@ const Login = () => {
                 <button
                   disabled={disabled}
                   className={`bg-title text-white text-xl font-semibold py-4 w-full rounded-lg my-8 ${
-                    disabled && "bg-[#e6ae5bb2]"
+                    disabled && "bg-[#d1a25bb2]"
                   }`}
                 >
                   <input type="submit" value="Sign In" />
@@ -121,7 +169,7 @@ const Login = () => {
                 </p>
                 <div className="flex justify-center items-center gap-4 mt-8 mb-12">
                   <button
-                    //   onClick={handleGoogleSignIn}
+                    onClick={handleGoogleSignIn}
                     className="bg-[#F5F5F8] p-3 rounded-full outline outline-1"
                   >
                     <FaGoogle></FaGoogle>
