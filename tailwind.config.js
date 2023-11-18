@@ -12,6 +12,8 @@ module.exports = withMT({
       colors: {
         title: "#D99904",
         para: "#737373",
+        dash: '#D1A054',
+        'dash-bg': '#F6F6F6',
       },
       fontFamily: {
         cinzel: ["Cinzel", "serif"],

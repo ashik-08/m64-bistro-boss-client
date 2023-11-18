@@ -12,7 +12,7 @@ const FoodCard = ({ food }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxios();
   const [, refetch] = useCart();
 
   const handleAddToCart = async () => {
@@ -28,7 +28,7 @@ const FoodCard = ({ food }) => {
       console.log(cartItem);
 
       try {
-        const response = await axiosInstance.post("/carts", cartItem);
+        const response = await axiosSecure.post("/carts", cartItem);
         console.log(response.data);
         if (response.data.insertedId) {
           toast.success("Cart Item Added Successfully.", { id: toastId });
