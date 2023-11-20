@@ -7,10 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
   const { createUser, updateUserProfile, logOut } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   const {
@@ -36,6 +38,29 @@ const Register = () => {
           .catch(() => {
             // An error occurred
           });
+
+        // add new user to the database
+        const createdAt = result.user?.metadata?.creationTime;
+        const user = {
+          name: data.name,
+          photo: data.photo,
+          email: data.email,
+          password: data.password,
+          createdAt: createdAt,
+        };
+
+        try {
+          const response = await axiosPublic.post("/users", user);
+          if (response.data.insertedId) {
+            toast.success("User Created Successfully.");
+          } else if (response.data.message === "Already exists") {
+            console.log("User already exist.");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error(error.message);
+        }
+
         // Logout and redirect to login page
         logOut()
           .then(() => {})

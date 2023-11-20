@@ -13,12 +13,14 @@ import {
 } from "react-simple-captcha";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -69,8 +71,31 @@ const Login = () => {
   // google sign in
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then((result) => {
+      .then(async (result) => {
         console.log(result.user);
+
+        // add new user to the database
+        const createdAt = result.user?.metadata?.creationTime;
+        const user = {
+          name: result.user?.displayName,
+          photo: result.user?.photoURL,
+          email: result.user?.email,
+          password: "",
+          createdAt: createdAt,
+        };
+
+        try {
+          const response = await axiosPublic.post("/users", user);
+          if (response.data.insertedId) {
+            toast.success("User Created Successfully.");
+          } else if (response.data.message === "Already exists") {
+            console.log("User already exist.");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error(error.message);
+        }
+
         toast.success("Logged In Successfully.");
         // navigate(location?.state ? location?.state : "/");
         navigate(from, { replace: true });

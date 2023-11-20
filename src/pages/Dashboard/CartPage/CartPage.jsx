@@ -11,11 +11,11 @@ import {
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import useAxios from "../../../components/hooks/useAxios";
+import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
 
   const TABLE_HEAD = ["Item Image", "Item Name", "Price", "Action"];
@@ -28,7 +28,7 @@ const CartPage = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, approve it!",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const toastId = toast.loading("Deleting Cart Item...");

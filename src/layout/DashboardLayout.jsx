@@ -1,20 +1,24 @@
 import { NavLink, Outlet } from "react-router-dom";
 import Container from "../components/Container/Container";
 import { IoMdCart } from "react-icons/io";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaBook, FaCalendarAlt, FaListUl } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import { BiSolidWalletAlt, BiSolidContact } from "react-icons/bi";
 import { MdReviews } from "react-icons/md";
 import { TbBrandBooking } from "react-icons/tb";
 import { FiMenu } from "react-icons/fi";
 import { SiFoodpanda } from "react-icons/si";
+import { ImSpoonKnife } from "react-icons/im";
+import { PiUsersThreeFill } from "react-icons/pi";
+import useAdmin from "../components/hooks/useAdmin";
 
 const DashboardLayout = () => {
+  const [isAdmin] = useAdmin();
+
   return (
     <section>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        {/* <div className="drawer-content flex flex-col items-center justify-center bg-dash-bg"> */}
         <div className="drawer-content min-h-screen bg-dash-bg">
           {/* Page content here */}
           <label
@@ -57,7 +61,157 @@ const DashboardLayout = () => {
               Restaurant
             </p>
             <ul className="menu mt-16 space-y-2">
-              <li>
+              {isAdmin ? (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/admin-home"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <AiFillHome />
+                      Admin Home
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/add-items"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <ImSpoonKnife />
+                      Add Items
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-items"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <FaListUl />
+                      Manage Items
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-bookings"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <FaBook />
+                      Manage bookings
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/users"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <PiUsersThreeFill />
+                      All Users
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/home"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <AiFillHome />
+                      User Home
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/reservation"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <FaCalendarAlt />
+                      Reservation
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/payment"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <BiSolidWalletAlt />
+                      Payment History
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/cart"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <IoMdCart />
+                      My Cart
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/review"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <MdReviews />
+                      Add Review
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/booking"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
+                          : "text-lg md:text-xl font-cinzel font-medium uppercase"
+                      }
+                    >
+                      <TbBrandBooking />
+                      My Booking
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {/* <li>
                 <NavLink
                   to="/dashboard/home"
                   className={({ isActive }) =>
@@ -134,7 +288,7 @@ const DashboardLayout = () => {
                   <TbBrandBooking />
                   My Booking
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
             <div className="divider px-5"></div>
             <ul className="menu space-y-2">

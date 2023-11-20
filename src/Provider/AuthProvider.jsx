@@ -12,7 +12,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import auth from "../firebase/firebase.config";
-// import axios from "axios";
+import useAxiosPublic from "../components/hooks/useAxiosPublic";
 
 export const AuthContext = createContext();
 
@@ -25,6 +25,7 @@ const facebookProvider = new FacebookAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
   // create new user
   const createUser = (email, password) => {
@@ -79,9 +80,19 @@ const AuthProvider = ({ children }) => {
   // observe auth state change
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      //   const loggedInUser = { email: currentUser?.email };
+      const loggedInUser = { email: currentUser?.email };
       setUser(currentUser);
       setLoading(false);
+      if (currentUser) {
+        // get token and store to local storage
+        axiosPublic.post("/jwt", loggedInUser).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        localStorage.removeItem("access-token");
+      }
       // if user exists then issue a token
       //   if (currentUser) {
       //     // get access token with axios
@@ -97,7 +108,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,
