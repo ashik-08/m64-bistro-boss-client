@@ -1,71 +1,83 @@
 import { Helmet } from "react-helmet-async";
 import Title from "../../../components/Dashboard/Title/Title";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import { ImSpoonKnife } from "react-icons/im";
+import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 
 const image_upload_api = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_UPLOAD_APIKEY
 }`;
 
-const AddItem = () => {
-  const { register, handleSubmit, reset } = useForm();
+const UpdateItem = () => {
+  const { id } = useParams();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const { name, category, price, recipe, image } = useLoaderData();
+
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data);
-    const toastId = toast.loading("Adding New Item...");
-    // image upload to imgBB
-    const imageFile = { image: data.image[0] };
+    console.log(data);
+    const toastId = toast.loading("Updating Menu Item...");
+
+    // Check if a new image is provided
+    let imageUrl = data.image[0] ? await uploadImage(data.image[0]) : null;
+
+    const updatedMenuItem = {
+      name: data.name,
+      recipe: data.details,
+      image: imageUrl || image, // Use the new image or the previous one
+      category: data.category,
+      price: Number(data.price),
+    };
+
     try {
-      const response = await axiosPublic.post(image_upload_api, imageFile, {
+      const response = await axiosSecure.patch(`/menu/${id}`, updatedMenuItem);
+      console.log(response.data);
+
+      if (response.data.modifiedCount > 0) {
+        toast.success("Item Updated Successfully.", { id: toastId });
+        reset();
+        navigate("/dashboard/manage-items");
+      } else if (response.data.modifiedCount === 0) {
+        toast.error("First make some changes.", { id: toastId });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while updating this item.", {
+        id: toastId,
+      });
+    }
+  };
+
+  const uploadImage = async (image) => {
+    try {
+      const response = await axiosPublic.post(image_upload_api, image, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      //   console.log(response.data);
+      console.log(response.data);
+
       if (response.data.success) {
-        const menuItem = {
-          name: data.name,
-          recipe: data.details,
-          image: response.data.data.display_url,
-          category: data.category,
-          price: Number(data.price),
-        };
-        try {
-          const response = await axiosSecure.post("/menu", menuItem);
-          //   console.log(response.data);
-          if (response.data.insertedId) {
-            toast.success("Item Added Successfully.", { id: toastId });
-            reset();
-          } else if (response.data.message === "Already exists") {
-            toast.error("Item already exist.", { id: toastId });
-          }
-        } catch (error) {
-          console.error(error);
-          toast.error("An error occurred while adding this item.", {
-            id: toastId,
-          });
-        }
+        return response.data.data.display_url;
       }
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred while adding this item.", {
-        id: toastId,
-      });
+      return null;
     }
   };
 
   return (
     <>
       <Helmet>
-        <title>Bistro Boss | Add Item</title>
+        <title>Bistro Boss | Update Item</title>
       </Helmet>
       <section>
-        <Title subHeading={"---What's new?---"} heading={"add an item"} />
+        <Title subHeading={"---Change Now---"} heading={"update an item"} />
         <div className="bg-white px-5 md:px-12 lg:px-20 py-20 rounded-xl">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -75,6 +87,7 @@ const AddItem = () => {
                   className="text-para bg-gray-50 w-full px-6 py-4 rounded-lg outline outline-1 outline-para"
                   type="text"
                   name="name"
+                  defaultValue={name}
                   {...register("name")}
                   id=""
                   placeholder="Service Name"
@@ -86,7 +99,7 @@ const AddItem = () => {
                 <select
                   {...register("category")}
                   className="text-para bg-gray-50 w-full px-5 py-4 rounded-lg outline outline-1 outline-para"
-                  defaultValue={"default"}
+                  defaultValue={category}
                 >
                   <option disabled value="default">
                     Category
@@ -105,6 +118,7 @@ const AddItem = () => {
                   className="text-para bg-gray-50 w-full px-6 py-4 rounded-lg outline outline-1 outline-para"
                   type="text"
                   name="price"
+                  defaultValue={price}
                   {...register("price")}
                   id=""
                   placeholder="Price"
@@ -116,6 +130,7 @@ const AddItem = () => {
                 <textarea
                   className="text-para bg-gray-50 w-full px-6 py-4 rounded-lg outline outline-1 outline-para"
                   name="details"
+                  defaultValue={recipe}
                   {...register("details")}
                   id=""
                   cols="30"
@@ -128,11 +143,10 @@ const AddItem = () => {
                 {...register("image")}
                 type="file"
                 className="bg-gray-50 file-input file-input-ghost w-full max-w-xs"
-                required
               />
               <span className="md:col-span-2">
-                <button className="flex items-center gap-3 bg-gradient-to-r from-[#835D23] to-[#B58130] text-white text-xl font-semibold py-4 px-10 rounded-lg">
-                  <input className="cursor-pointer" type="submit" value="Add Item" /> <ImSpoonKnife />
+                <button className="bg-gradient-to-r from-[#835D23] to-[#B58130] text-white text-xl font-semibold py-4 px-10 rounded-lg">
+                  <input type="submit" value="Update Recipe Details" />
                 </button>
               </span>
             </div>
@@ -143,4 +157,4 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+export default UpdateItem;

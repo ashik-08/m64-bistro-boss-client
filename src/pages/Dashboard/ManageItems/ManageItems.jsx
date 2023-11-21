@@ -25,8 +25,8 @@ const ManageItems = () => {
     "Item Image",
     "Item Name",
     "Price",
-    "Action",
-    "Action",
+    "Update",
+    "Delete",
   ];
 
   const handleDeleteItem = (id) => {
@@ -47,7 +47,7 @@ const ManageItems = () => {
         // delete menu item from database
         try {
           const response = await axiosSecure.delete(`/menu/${id}`);
-          console.log(response.data);
+        //   console.log(response.data);
           if (response.data.deletedCount > 0) {
             toast.success("Menu Item Deleted Successfully.", { id: toastId });
             refetch();

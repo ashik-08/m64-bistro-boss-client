@@ -35,7 +35,7 @@ const CartPage = () => {
         // delete own cart item from database
         try {
           const response = await axiosSecure.delete(`/carts/${id}`);
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.deletedCount > 0) {
             toast.success("Cart Item Deleted Successfully.", { id: toastId });
             refetch();
