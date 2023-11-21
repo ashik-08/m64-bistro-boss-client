@@ -66,22 +66,8 @@ const AddItem = () => {
       <section>
         <Title subHeading={"---What's new?---"} heading={"add an item"} />
         <div className="bg-white px-5 md:px-12 lg:px-20 py-20 rounded-xl">
-          <form
-            // onSubmit={handleAddService}
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* <span className="space-y-4">
-              <p className="text-lg font-semibold">Service Id</p>
-              <input
-                className="text-placeholder w-full px-6 py-4 rounded-lg outline outline-1 outline-foot-details"
-                type="text"
-                name="service_id"
-                id=""
-                placeholder="Service Id"
-                required
-              />
-            </span> */}
               <span className="space-y-4 md:col-span-2">
                 <p className="text-lg font-semibold">Recipe Name</p>
                 <input
@@ -96,15 +82,6 @@ const AddItem = () => {
               </span>
               <span className="space-y-4">
                 <p className="text-lg font-semibold">Category</p>
-                {/* <input
-                  className="text-para bg-gray-50 w-full px-6 py-4 rounded-lg outline outline-1 outline-para"
-                  type=""
-                  name="category"
-                  {...register("category")}
-                  id=""
-                  placeholder="Category"
-                  required
-                /> */}
                 <select
                   {...register("category")}
                   className="text-para bg-gray-50 w-full px-5 py-4 rounded-lg outline outline-1 outline-para"
@@ -113,7 +90,7 @@ const AddItem = () => {
                   <option disabled value="default">
                     Category
                   </option>
-                  <option value="offer">Offer</option>
+                  <option value="offered">Offer</option>
                   <option value="dessert">Dessert</option>
                   <option value="pizza">Pizza</option>
                   <option value="salad">Salad</option>
@@ -146,14 +123,12 @@ const AddItem = () => {
                   required
                 ></textarea>
               </span>
-
               <input
                 {...register("image")}
                 type="file"
                 className="bg-gray-50 file-input file-input-ghost w-full max-w-xs"
                 required
               />
-
               <span className="md:col-span-2">
                 <button className="bg-gradient-to-r from-[#835D23] to-[#B58130] text-white text-xl font-semibold py-4 w-full rounded-lg">
                   <input type="submit" value="Add Item" />

@@ -18,7 +18,7 @@ const CartPage = () => {
   const axiosSecure = useAxiosSecure();
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
 
-  const TABLE_HEAD = ["Item Image", "Item Name", "Price", "Action"];
+  const TABLE_HEAD = ["", "Item Image", "Item Name", "Price", "Action"];
 
   const handleCartDelete = (id) => {
     Swal.fire({
@@ -93,6 +93,7 @@ const CartPage = () => {
 
                     return (
                       <tr key={_id}>
+                        <td className={classes}>{index + 1}</td>
                         <td className={classes}>
                           <Avatar src={image} alt={name} size="xxl" />
                         </td>
@@ -109,7 +110,7 @@ const CartPage = () => {
                         <td className={classes}>
                           <Typography
                             variant="paragraph"
-                            className="text-saffron font-medium"
+                            className="font-medium"
                           >
                             ${price}
                           </Typography>

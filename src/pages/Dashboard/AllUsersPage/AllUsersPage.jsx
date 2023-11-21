@@ -26,7 +26,7 @@ const AllUsersPage = () => {
     },
   });
 
-  const TABLE_HEAD = ["Name", "Email", "Role", "Action"];
+  const TABLE_HEAD = ["", "Name", "Email", "Role", "Action"];
 
   const handleUserDelete = (id) => {
     if (!isAdmin) {
@@ -43,7 +43,7 @@ const AllUsersPage = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const toastId = toast.loading("Deleting User...");
-        // delete own cart item from database
+        // delete user from database
         try {
           const response = await axiosSecure.delete(`/users/${id}`);
           if (response.data.deletedCount > 0) {
@@ -133,6 +133,7 @@ const AllUsersPage = () => {
 
                       return (
                         <tr key={_id}>
+                          <td className={classes}>{index + 1}</td>
                           <td className={classes}>
                             <Typography
                               variant="lead"
@@ -166,7 +167,7 @@ const AllUsersPage = () => {
                               <Tooltip content="Update Role">
                                 <IconButton variant="text">
                                   <PiUsersThreeFill
-                                    className="w-10 h-10 bg-[#B91C1C] text-white p-2.5 rounded-md"
+                                    className="w-10 h-10 bg-dash text-white p-2.5 rounded-md"
                                     onClick={() => handleMakeAdmin(_id)}
                                   />
                                 </IconButton>
