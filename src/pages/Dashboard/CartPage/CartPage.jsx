@@ -12,6 +12,7 @@ import {
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
@@ -61,9 +62,20 @@ const CartPage = () => {
           <div className="flex justify-between items-center text-xl md:text-2xl xl:text-3xl font-cinzel font-bold uppercase">
             <h1>total orders: {cart.length}</h1>
             <h1>total price: ${totalPrice}</h1>
-            <button className="bg-dash text-white md:text-lg px-3 py-2 rounded-lg">
-              PAY
-            </button>
+            {cart.length ? (
+              <Link to="/dashboard/make-payment">
+                <button className="bg-dash text-white md:text-lg px-3 py-2 rounded-lg">
+                  PAY
+                </button>
+              </Link>
+            ) : (
+              <button
+                disabled
+                className="bg-dash text-white md:text-lg px-3 py-2 rounded-lg"
+              >
+                PAY
+              </button>
+            )}
           </div>
           {/* TABLE */}
           <Card className="h-full w-full p-4 mt-8">
