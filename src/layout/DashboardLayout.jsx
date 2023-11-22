@@ -133,7 +133,7 @@ const DashboardLayout = () => {
                 <>
                   <li>
                     <NavLink
-                      to="/dashboard/home"
+                      to="/dashboard/user-home"
                       className={({ isActive }) =>
                         isActive
                           ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
@@ -146,7 +146,7 @@ const DashboardLayout = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/dashboard/reservation"
+                      to="/dashboard/make-reservation"
                       className={({ isActive }) =>
                         isActive
                           ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
@@ -159,7 +159,7 @@ const DashboardLayout = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/dashboard/payment"
+                      to="/dashboard/payment-history"
                       className={({ isActive }) =>
                         isActive
                           ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"
@@ -198,7 +198,7 @@ const DashboardLayout = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/dashboard/booking"
+                      to="/dashboard/bookings"
                       className={({ isActive }) =>
                         isActive
                           ? "text-white text-lg md:text-xl font-cinzel font-bold uppercase"

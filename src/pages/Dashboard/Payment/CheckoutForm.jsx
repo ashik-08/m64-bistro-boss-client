@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 import useCart from "../../../components/hooks/useCart";
+import moment from "moment/moment";
 
 // const CheckoutForm = () => {
 //   const stripe = useStripe();
@@ -103,7 +104,7 @@ const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const axiosSecure = useAxiosSecure();
-  const [cart] = useCart();
+  const [cart, refetch] = useCart();
   const totalPrice = cart?.reduce((sum, item) => sum + item.price, 0);
   console.log(totalPrice);
 
@@ -183,7 +184,7 @@ const CheckoutForm = () => {
           email: user?.email,
           amount: totalPrice,
           transactionId: paymentIntent.id,
-          paymentDate: new Date(),
+          paymentDate: moment().format("dddd, MMMM DD, YYYY, hh:mm:ss A, Z"),
           cartIds: cart.map((item) => item._id),
           menuIds: cart.map((item) => item.menuId),
           status: "pending",
@@ -192,6 +193,7 @@ const CheckoutForm = () => {
         console.log(response.data);
         if (response.data.paymentResult.insertedId) {
           toast.success("Payment Successful.", { id: toastId });
+          refetch();
         }
       }
     }
