@@ -6,10 +6,12 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import { GrCart } from "react-icons/gr";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
 
   const handleLogout = () => {
     const toastId = toast.loading("Logging Out...");
@@ -51,7 +53,7 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
-          to="/dashboard"
+          to={isAdmin ? "/dashboard/admin-home" : "/dashboard/user-home"}
           className={({ isActive }) =>
             isActive
               ? "text-title text-sm md:text-lg font-bold"
